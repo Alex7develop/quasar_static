@@ -24,6 +24,13 @@ import { useDeviceData } from '../../composables/useDeviceData';
 import { formatUptime } from '../../utils/formatters'; 
 import { useQuasar } from 'quasar';
 
+// Импортируем иконки
+import tflopsIcon from '../../assets/icon/tflops.png';
+import powerIcon from '../../assets/icon/power.png';
+import uptimeIcon from '../../assets/icon/uptime.png';
+import fanIcon from '../../assets/icon/fan.png';
+import tempIcon from '../../assets/icon/temp.png';
+
 const { statistics } = useDeviceData();
 const $q = useQuasar();
 
@@ -33,16 +40,17 @@ const metrics = computed(() => {
    
     const placeholder = (title: string, iconPath: string, unit = '', description = '') => ({ title, value: '-', unit, description, icon: iconPath });
     return [
-      placeholder('10 sec', 'src/assets/icon/tflops.png', 'TFLOPS', 'Выработка мощности за 10 сек.'),
-      placeholder('24 hours', 'src/assets/icon/tflops.png', 'TFLOPS', 'Выработка мощности за 24 часа'),
-      placeholder('Power', 'src/assets/icon/power.png', 'Watts', 'Потребление электричества'),
-      placeholder('Uptime', 'src/assets/icon/uptime.png', '', 'Время не прерывной работы устройства'),
-      placeholder('Fan 1', 'src/assets/icon/fan.png', '', 'Скорость вращения вентилятора'),
-      placeholder('Fan 2', 'src/assets/icon/fan.png', '', 'Скорость вращения вентилятора'),
-      placeholder('Fan 3', 'src/assets/icon/fan.png', '', 'Скорость вращения вентилятора'),
-      placeholder('Fan 4', 'src/assets/icon/fan.png', '', 'Скорость вращения вентилятора'),
-      placeholder('Temp IN', 'src/assets/icon/temp.png', '°C', 'Температура'),
-      placeholder('Temp OUT', 'src/assets/icon/temp.png', '°C', 'Температура'),
+      // Используем импортированные иконки
+      placeholder('10 sec', tflopsIcon, 'TFLOPS', 'Выработка мощности за 10 сек.'),
+      placeholder('24 hours', tflopsIcon, 'TFLOPS', 'Выработка мощности за 24 часа'),
+      placeholder('Power', powerIcon, 'Watts', 'Потребление электричества'),
+      placeholder('Uptime', uptimeIcon, '', 'Время не прерывной работы устройства'),
+      placeholder('Fan 1', fanIcon, '', 'Скорость вращения вентилятора'),
+      placeholder('Fan 2', fanIcon, '', 'Скорость вращения вентилятора'),
+      placeholder('Fan 3', fanIcon, '', 'Скорость вращения вентилятора'),
+      placeholder('Fan 4', fanIcon, '', 'Скорость вращения вентилятора'),
+      placeholder('Temp IN', tempIcon, '°C', 'Температура'),
+      placeholder('Temp OUT', tempIcon, '°C', 'Температура'),
     ];
   }
 
@@ -59,70 +67,70 @@ const metrics = computed(() => {
       value: formatTflops(s.real),
       unit: 'TFLOPS',
       description: 'Выработка мощности за 10 сек.',
-      icon: 'src/assets/icon/tflops.png',
+      icon: tflopsIcon, // Используем импорт
     },
     {
       title: '24 hours',
       value: formatTflops(s.avg),
       unit: 'TFLOPS',
       description: 'Выработка мощности за 24 часа',
-      icon: 'src/assets/icon/tflops.png',
+      icon: tflopsIcon, // Используем импорт
     },
     {
       title: 'Power',
       value: typeof s.power === 'string' ? parseInt(s.power, 10) : (typeof s.power === 'number' ? s.power : '-'),
       unit: 'Watts',
       description: 'Потребление электричества',
-      icon: 'src/assets/icon/power.png',
+      icon: powerIcon, // Используем импорт
     },
     {
       title: 'Uptime',
       value: formatUptime(s.uptime_sys),
       unit: '',
       description: 'Время не прерывной работы устройства',
-      icon: 'src/assets/icon/uptime.png',
+      icon: uptimeIcon, // Используем импорт
     },
     {
       title: 'Fan 1',
       value: fans[0] ?? '-',
       unit: 'RPM',
       description: 'Скорость вращения вентилятора',
-      icon: 'src/assets/icon/fan.png',
+      icon: fanIcon, // Используем импорт
     },
     {
       title: 'Fan 2',
       value: fans[1] ?? '-',
       unit: 'RPM',
       description: 'Скорость вращения вентилятора',
-      icon: 'src/assets/icon/fan.png',
+      icon: fanIcon, // Используем импорт
     },
     {
       title: 'Fan 3',
       value: fans[2] ?? '-',
       unit: 'RPM',
       description: 'Скорость вращения вентилятора',
-      icon: 'src/assets/icon/fan.png',
+      icon: fanIcon, // Используем импорт
     },
     {
       title: 'Fan 4',
       value: fans[3] ?? '-',
       unit: 'RPM',
       description: 'Скорость вращения вентилятора',
-      icon: 'src/assets/icon/fan.png',
+      icon: fanIcon, // Используем импорт
     },
     {
       title: 'Temp IN',
       value: temps.in ?? '-',
       unit: '°C',
       description: 'Температура',
-      icon: 'src/assets/icon/temp.png',
+      icon: tempIcon, // Используем импорт
     },
     {
       title: 'Temp OUT',
       value: temps.out ?? '-',
       unit: '°C',
       description: 'Температура',
-      icon: 'src/assets/icon/temp.png',
+      icon: tempIcon, // Используем импорт
     },
   ];
 });
