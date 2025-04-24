@@ -5,3 +5,25 @@ declare namespace NodeJS {
     VUE_ROUTER_BASE: string | undefined;
   }
 }
+
+// Добавляем декларацию для файлов изображений
+declare module '*.png' {
+  const value: string;
+  export default value;
+}
+declare module '*.jpg' {
+  const value: string;
+  export default value;
+}
+declare module '*.jpeg' {
+  const value: string;
+  export default value;
+}
+declare module '*.gif' {
+  const value: string;
+  export default value;
+}
+declare module '*.svg' {
+  const value: string;
+  export default value;
+}
