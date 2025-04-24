@@ -1,0 +1,69 @@
+{
+    "model": {
+    "board": "AMLogic",
+    "type": "S19-88"
+    },
+    "is_overheat": false,
+    "power_ids": null,
+    "power_range": {
+    "first_id": -10,
+    "from": 1000,
+    "to": 4500,
+    "step": 100
+    },
+    "power_current": {
+    "rate": "0",
+    "profile": "-10",
+    "status": "2",
+    "type": "0"
+    },
+    "conf": {
+    "ip": "45.144.232.201",
+    "port": 1000,
+    "user": "hf23bbld",
+    "password": "123423",
+    "online": true
+    },
+    "blink_state": {
+    "is_blinking": false,
+    "blinks_left": null
+    },
+    "network": {
+    "address": "192.168.0.245",
+    "macaddr": "02:74:2a:b3:78:51",
+    "netmask": "255.255.255.0"
+    },
+    "uptime_bin": 691944,
+    "uptime_sys": 692722,
+    "fan": [
+    4140,
+    4020,
+    3690,
+    3690,
+    0,
+    0,
+    0,
+    0
+    ],
+    "bild": "v2.6.0.36",
+    "chain_num": 3,
+    "real": 8913,
+    "avg": 8451,
+    "pwm": 53,
+    "temps": {
+    "in": 49,
+    "out": 58,
+    "in_values": [
+    49,
+    50,
+    50
+    ],
+    "out_values": [
+    58,
+    58,
+    59
+    ]
+    },
+    "miner_status": "",
+    "power": "1000"
+    }
