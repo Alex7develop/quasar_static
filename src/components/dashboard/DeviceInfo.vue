@@ -4,11 +4,21 @@
       <div class="row items-center justify-between no-wrap">
         <!-- Левая часть: Лого, Статус и Название -->
         <div class="col-auto row items-center no-wrap q-gutter-sm">
-          <!-- Логотип Syndicate -->
-          <img src="../../assets/quasar-logo-vertical.svg" alt="Syndicate Logo" class="syndicate-logo q-mr-md">
+          <!-- Заменяем логотип -->
+          <img 
+            :src="newLogo" 
+            alt="Syndicate Logo" 
+            class="syndicate-logo q-mr-md"
+          >
 
-          <div class="row items-center no-wrap status-container q-pa-xs q-mr-md">
-            <span class="status-dot-ref" :class="isOnline ? 'bg-green' : 'bg-red'"></span>
+          <div 
+            class="row items-center no-wrap status-container q-pa-xs q-mr-md"
+            :class="isOnline ? 'status-border-online' : 'status-border-offline'"
+          >
+            <span 
+              class="status-dot-ref"
+              :style="{ backgroundColor: isOnline ? '#69F0AE' : '#FF5252' }"
+             ></span>
             <span class="text-body2 text-weight-bold q-ml-sm">{{ deviceStatusText }}</span>
           </div>
 
@@ -45,6 +55,9 @@ import { computed, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useDeviceData } from '../../composables/useDeviceData';
 import { startBlink, getApiErrorMessage } from '../../services/api';
+
+// Импортируем новый логотип по правильному пути
+import newLogo from '../../assets/icon/logo.png'; 
 
 const $q = useQuasar();
 const { statistics, isOnline } = useDeviceData();
@@ -95,10 +108,23 @@ const onLocate = async () => {
 }
 
 .status-container {
+  border: 1px solid transparent;
   border-radius: 20px;
   min-width: 90px;
   justify-content: center;
   white-space: nowrap;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  background-color: rgba(30, 32, 41, 0.5);
+}
+
+.status-border-online {
+  border-color: #69F0AE; 
+  background-color: rgba(105, 240, 174, 0.1);
+}
+
+.status-border-offline {
+  border-color: #FF5252; 
+  background-color: rgba(255, 82, 82, 0.1);
 }
 
 .status-dot-ref {
