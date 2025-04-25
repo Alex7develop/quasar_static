@@ -7,7 +7,7 @@ import type {
   ConfigUpdatePayload,
 } from '../types/api'
 
-const API_BASE_URL = 'http://tstai.rasar.keenetic.link'
+const API_BASE_URL = 'https://tstai.rasar.keenetic.link'
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
