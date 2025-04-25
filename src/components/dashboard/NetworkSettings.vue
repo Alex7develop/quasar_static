@@ -10,10 +10,10 @@
               outlined
               dense
               v-model="ipRef"
-              label="IP"
+              label="Server IP"
               label-color="grey-6"
               :input-style="{ color: 'white' }"
-              :rules="[ (val: string) => !!val || 'IP is required', (val: string) => /^(\d{1,3}\.){3}\d{1,3}$/.test(val) || 'Invalid IP format']"
+              :rules="[ (val: string) => !!val || 'Server IP is required', (val: string) => /^(\d{1,3}\.){3}\d{1,3}$/.test(val) || 'Invalid IP format']"
               lazy-rules
               :disable="!isOnline"
             />

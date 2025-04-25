@@ -28,7 +28,7 @@
             <!-- Отображение IP, Port, User, Power -->
             <div class="control-info q-mb-md">
               <div class="row items-center q-mb-sm">
-                <strong class="col-4 text-grey-6">IP:</strong>
+                <strong class="col-4 text-grey-6">Server IP:</strong>
                 <span class="col-8">{{ deviceControlInfo.ip }}</span>
               </div>
               <div class="row items-center q-mb-sm">

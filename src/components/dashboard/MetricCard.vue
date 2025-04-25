@@ -8,8 +8,6 @@
              <div class="text-h6 text-weight-medium">{{ value }}</div>
              <div v-if="unit" class="text-caption">{{ unit }}</div>
           </div>
-         
-          <div class="text-caption description">{{ description }}</div>
         </div>
 
         <div class="col-auto">
@@ -39,7 +37,6 @@ defineProps<{
   title: string;
   value: string | number;
   unit?: string;
-  description?: string;
   icon: string; 
 }>();
 
@@ -57,11 +54,7 @@ const isImagePath = (iconName: string): boolean => {
 }
 
 .value-unit-row {
-  margin-bottom: 8px; 
-}
-
-.description {
-  min-height: 2.5em; 
+  margin-bottom: 0;
 }
 
 .metric-icon {
