@@ -7,8 +7,7 @@ import type {
   ConfigUpdatePayload,
 } from '../types/api'
 
-const API_BASE_URL = 'http://localhost:3000'
-const USE_STATIC_DATA = true
+const API_BASE_URL = 'http://tstai.rasar.keenetic.link'
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -77,52 +76,24 @@ export interface ApiError {
 }
 
 export const getStatistics = async (): Promise<StatisticResponse> => {
-  if (USE_STATIC_DATA) {
-    console.log("Fetching static data for statistics from /src/services/apiStatic.json");
-    try {
-      const response = await fetch('/src/services/apiStatic.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data as StatisticResponse;
-    } catch (error) {
-      console.error('Error fetching static statistics data:', error);
-      throw error;
-    }
-  } else {
-    try {
-      const response = await apiClient.get<StatisticResponse>('/api/statistic');
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching statistics:', error);
-      throw error;
-    }
+  try {
+    console.log('Fetching statistics from API...')
+    const response = await apiClient.get<StatisticResponse>('/api/statistic');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching statistics:', error);
+    throw error;
   }
 }
 
 export const getHistory = async (): Promise<HistoryResponse> => {
-  if (USE_STATIC_DATA) {
-    console.log("Fetching static data for history from /src/services/apiHistory.json");
-    try {
-      const response = await fetch('/src/services/apiHistory.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data as HistoryResponse;
-    } catch (error) {
-      console.error('Error fetching static history data:', error);
-      throw error;
-    }
-  } else {
-    try {
-      const response = await apiClient.get<HistoryResponse>('/api/history');
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching history:', error);
-      throw error;
-    }
+  try {
+    console.log('Fetching history from API...')
+    const response = await apiClient.get<HistoryResponse>('/api/history');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching history:', error);
+    throw error;
   }
 }
 

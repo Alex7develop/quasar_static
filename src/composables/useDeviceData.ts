@@ -7,10 +7,9 @@ import {
   getApiErrorMessage
 } from '../services/api'
 
-const POLLING_INTERVAL = 10 * 60 * 1000;
-const USE_STATIC_DATA = true; // Keep the flag, api.ts will use it
+// Устанавливаем интервал обновления в 10 секунд (10 * 1000 мс)
+const POLLING_INTERVAL = 10 * 1000; 
 
-// Initialize refs back to null/default
 const statistics = ref<StatisticResponse | null>(null);
 const history = ref<HistoryResponse | null>(null);
 const isLoading = ref<boolean>(false);
@@ -22,12 +21,16 @@ let intervalId: ReturnType<typeof setInterval> | null = null;
 export function useDeviceData() {
   const $q = useQuasar();
 
-  // fetchData now uses the modified getStatistics/getHistory
   const fetchData = async () => {
-    isLoading.value = true;
+    // Не устанавливаем isLoading в true при каждом поллинге, 
+    // чтобы избежать мерцания индикатора загрузки.
+    // Установим только при первой загрузке.
+    if (!statistics.value && !history.value) {
+        isLoading.value = true;
+    }
     error.value = null;
     try {
-      // These functions will internally decide whether to fetch static or real data
+      // Запрашиваем данные из API
       const [statsData, histData] = await Promise.all([
         getStatistics(),
         getHistory()
@@ -38,25 +41,27 @@ export function useDeviceData() {
     } catch (err) {
       const message = getApiErrorMessage(err);
       error.value = message;
-      $q.notify({
-        color: 'negative',
-        message: `Failed to fetch device data: ${message}`,
-        icon: 'report_problem'
-      });
+      // Показываем уведомление об ошибке только если это не ошибка поллинга (т.е. при первой загрузке)
+      // или если ошибка отличается от предыдущей, чтобы не спамить
+      if (!statistics.value && !history.value) {
+        $q.notify({
+          color: 'negative',
+          message: `Failed to fetch initial device data: ${message}`,
+          icon: 'report_problem'
+        });
+      }
+       console.error('Error fetching device data during polling:', message);
     } finally {
-      isLoading.value = false;
+      // Устанавливаем isLoading в false только после первой загрузки
+      if (isLoading.value && (statistics.value || history.value)) {
+        isLoading.value = false;
+      }
     }
   };
 
   const startPolling = () => {
-    // Polling is only started if NOT using static data
-    if (USE_STATIC_DATA) {
-       console.log('Using static data, polling is disabled.');
-       return; 
-    }
-
-    // Original polling logic for real API
-    if (intervalId) return;
+    stopPolling(); // Останавливаем предыдущий интервал, если он был
+    console.log(`Starting data polling every ${POLLING_INTERVAL / 1000} seconds.`);
     intervalId = setInterval(() => {
       void fetchData();
     }, POLLING_INTERVAL);
@@ -64,25 +69,24 @@ export function useDeviceData() {
 
   const stopPolling = () => {
     if (intervalId) {
+      console.log('Stopping data polling.');
       clearInterval(intervalId);
       intervalId = null;
     }
   };
 
   onMounted(() => {
-    // Fetch data once on mount, regardless of static/real mode
-    void fetchData();
-    // Start polling only if not using static data
-    startPolling();
+    void fetchData(); // Первая загрузка данных
+    startPolling();  // Запуск периодического обновления
   });
 
   onUnmounted(() => {
-    stopPolling();
+    stopPolling(); // Остановка обновления при размонтировании компонента
   });
 
   const isOnline = computed(() => statistics.value?.conf?.online ?? false);
 
-  // refreshData simply calls fetchData again
+  // refreshData просто снова вызывает fetchData
   const refreshData = async () => {
      await fetchData();
   };
