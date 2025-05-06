@@ -7,7 +7,10 @@ import type {
   ConfigUpdatePayload,
 } from '../types/api'
 
-const API_BASE_URL = '/api'
+const API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://tstai.rasar.keenetic.link'
+    : '/api';
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
