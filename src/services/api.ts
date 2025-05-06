@@ -7,7 +7,7 @@ import type {
   ConfigUpdatePayload,
 } from '../types/api'
 
-const API_BASE_URL = 'https://tstai.rasar.keenetic.link'
+const API_BASE_URL = '/api'
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -78,7 +78,7 @@ export interface ApiError {
 export const getStatistics = async (): Promise<StatisticResponse> => {
   try {
     console.log('Fetching statistics from API...')
-    const response = await apiClient.get<StatisticResponse>('/api/statistic');
+    const response = await apiClient.get<StatisticResponse>('/statistic');
     return response.data;
   } catch (error) {
     console.error('Error fetching statistics:', error);
@@ -89,7 +89,7 @@ export const getStatistics = async (): Promise<StatisticResponse> => {
 export const getHistory = async (): Promise<HistoryResponse> => {
   try {
     console.log('Fetching history from API...')
-    const response = await apiClient.get<HistoryResponse>('/api/history');
+    const response = await apiClient.get<HistoryResponse>('/history');
     return response.data;
   } catch (error) {
     console.error('Error fetching history:', error);
@@ -99,7 +99,7 @@ export const getHistory = async (): Promise<HistoryResponse> => {
 
 export const startBlink = async (): Promise<void> => {
   try {
-    await apiClient.post('/api/blink/start');
+    await apiClient.post('/blink/start');
   } catch (error) {
     console.error('Error starting blink:', error);
     throw error;
@@ -108,7 +108,7 @@ export const startBlink = async (): Promise<void> => {
 
 export const stopBlink = async (): Promise<void> => {
   try {
-    await apiClient.post('/api/blink/stop');
+    await apiClient.post('/blink/stop');
   } catch (error) {
     console.error('Error stopping blink:', error);
     throw error;
@@ -117,7 +117,7 @@ export const stopBlink = async (): Promise<void> => {
 
 export const updateConfig = async (config: ConfigUpdatePayload): Promise<void> => {
   try {
-    await apiClient.post('/api/conf', config);
+    await apiClient.post('/conf', config);
   } catch (error) {
     console.error('Error updating config:', error);
     throw error;
@@ -136,7 +136,7 @@ export const rebootDevice = async (): Promise<void> => {
 
 export const startPower = async (id: number): Promise<void> => {
   try {
-    await apiClient.post('/api/power/start', { id });
+    await apiClient.post('/power/start', { id });
   } catch (error) {
     console.error('Error starting power:', error);
     throw error;
@@ -145,7 +145,7 @@ export const startPower = async (id: number): Promise<void> => {
 
 export const stopPower = async (): Promise<void> => {
   try {
-    await apiClient.post('/api/power/stop');
+    await apiClient.post('/power/stop');
   } catch (error) {
     console.error('Error stopping power:', error);
     throw error;
@@ -154,7 +154,7 @@ export const stopPower = async (): Promise<void> => {
 
 export const switchPower = async (id: number): Promise<void> => {
   try {
-    await apiClient.post(`/api/power/switch/${id}`);
+    await apiClient.post(`/power/switch/${id}`);
   } catch (error) {
     console.error('Error switching power:', error);
     throw error;
